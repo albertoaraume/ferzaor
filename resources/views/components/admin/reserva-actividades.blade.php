@@ -120,7 +120,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="10"><br></td>
+                                <td colspan="12"><br></td>
                             </tr>
                         @endforeach
                     @endforeach

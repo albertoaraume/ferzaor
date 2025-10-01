@@ -7,19 +7,19 @@
             </div>
         </div>
         <ul class="table-top-head">
-              @can('reservas.edit', 'web')
-           <li>
-                <a href="{{ route('admin.reservas.edit', $reserva->guid) }}" class="btn btn-info btn-sm me-2">
-                    <i class="fas fa-edit"></i>
-                    Editar Reserva
-                </a>
-            </li>
-             @endcan
+
             <li>
                 <a data-bs-toggle="tooltip" data-bs-placement="top" title="Collapse" id="collapse-header"><i
                         class="ti ti-chevron-up"></i></a>
             </li>
         </ul>
+  @can('reservas.edit', 'web')
+       <div class="page-btn">
+                <a href="{{ route('admin.reservas.edit', $reserva->guid) }}" class="btn btn-primary"><i class="fas fa-edit me-1"></i>Editar reserva</a>
+            </div>
+              @endcan
+
+
     </div>
 
     <div class="row mb-4">

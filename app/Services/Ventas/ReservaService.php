@@ -6,12 +6,17 @@ use App\Models\Erp\Reserva;
 use App\Models\Erp\ReservaAU;
 use App\Models\Erp\ReservaY;
 use App\Models\Erp\ReservaT;
+use App\Models\Erp\ReservaAD;
+use App\Models\Erp\ReservaC;
 use App\Models\Erp\Cliente;
 use App\Models\Erp\Locacion;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Exception;
 class ReservaService
 {
 
@@ -238,6 +243,260 @@ class ReservaService
 
         ];
     });
+    }
+
+    public function editarReserva(int $reservaId, array $datos): ?Reserva
+    {
+        $reserva = Reserva::find($reservaId);
+        if (!$reserva) {
+            return null;
+        }
+
+        // Actualizar los campos de la reserva
+        $reserva->fill($datos);
+        $reserva->save();
+
+        return $reserva;
+    }
+
+    public function cancelarReserva(int $reservaId): ?Reserva
+    {
+        $reserva = Reserva::find($reservaId);
+        if (!$reserva) {
+            return null;
+        }
+
+        // Cambiar el estado de la reserva a cancelado
+        $reserva->status = 0;
+        $reserva->save();
+
+        return $reserva;
+    }
+
+    /**
+     * Actualizar un servicio de la reserva
+     */
+    public function actualizarServicio(string $tipo, int $id, array $datos): bool
+    {
+        try {
+            DB::beginTransaction();
+
+            $datosActualizacion = [
+                'id_update' => Auth::id(),
+                'date_update' => now()
+            ];
+
+            switch ($tipo) {
+                case 'actividad':
+                    $datosActualizacion = array_merge($datosActualizacion, [
+                        'tarifa' => $datos['precio'],
+                        'pax' => $datos['pax']
+                    ]);
+
+                    if (isset($datos['fechaHora'])) {
+                        $datosActualizacion['start'] = $datos['fechaHora'];
+                    }
+
+                    ReservaAU::where('idAU', $id)->update($datosActualizacion);
+                    break;
+
+                case 'yate':
+                    $datosActualizacion = array_merge($datosActualizacion, [
+                        'tarifa' => $datos['precio'],
+                        'pax' => $datos['pax']
+                    ]);
+
+                    if (isset($datos['fechaHora'])) {
+                        $datosActualizacion['start'] = $datos['fechaHora'];
+                    }
+
+                    ReservaY::where('idRY', $id)->update($datosActualizacion);
+                    break;
+
+                case 'traslado':
+                    $datosActualizacion = array_merge($datosActualizacion, [
+                        'tarifa' => $datos['precio'],
+                        'cantPax' => $datos['pax']
+                    ]);
+
+                    if (isset($datos['fecha'])) {
+                        $datosActualizacion['fechaArrival'] = $datos['fecha'];
+                    }
+
+                    if (isset($datos['hora'])) {
+                        $datosActualizacion['horaArrival'] = $datos['hora'];
+                    }
+
+                    ReservaT::where('idRT', $id)->update($datosActualizacion);
+                    break;
+
+                case 'servicio':
+                    $datosActualizacion = array_merge($datosActualizacion, [
+                        'precio' => $datos['precio'],
+                        'pax' => $datos['pax']
+                    ]);
+
+                    if (isset($datos['fechaHora'])) {
+                        $datosActualizacion['fecha'] = $datos['fechaHora'];
+                    }
+
+                    ReservaAD::where('idAD', $id)->update($datosActualizacion);
+                    break;
+
+                case 'combo':
+                    $datosActualizacion = array_merge($datosActualizacion, [
+                        'tarifa' => $datos['precio'],
+                        'pax' => $datos['pax']
+                    ]);
+
+                    if (isset($datos['fechaHora'])) {
+                        $datosActualizacion['fecha'] = $datos['fechaHora'];
+                    }
+
+                    ReservaC::where('idRC', $id)->update($datosActualizacion);
+                    break;
+
+                default:
+                    throw new Exception("Tipo de servicio no válido: {$tipo}");
+            }
+
+            DB::commit();
+            return true;
+
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    /**
+     * Cancelar un servicio de la reserva
+     */
+    public function cancelarServicio(string $tipo, int $id, string $motivo): bool
+    {
+        try {
+            DB::beginTransaction();
+
+            $datosActualizacion = [
+                'status' => 0,
+                'motivo_update' => 'Cancelado: ' . $motivo,
+                'id_update' => Auth::id(),
+                'date_update' => now()
+            ];
+
+            switch ($tipo) {
+                case 'actividad':
+                    ReservaAU::where('idAU', $id)->update($datosActualizacion);
+                    break;
+
+                case 'yate':
+                    ReservaY::where('idRY', $id)->update($datosActualizacion);
+                    break;
+
+                case 'traslado':
+                    ReservaT::where('idRT', $id)->update($datosActualizacion);
+                    break;
+
+                case 'servicio':
+                    ReservaAD::where('idAD', $id)->update($datosActualizacion);
+                    break;
+
+                case 'combo':
+                    ReservaC::where('idRC', $id)->update($datosActualizacion);
+                    break;
+
+                default:
+                    throw new Exception("Tipo de servicio no válido: {$tipo}");
+            }
+
+            DB::commit();
+            return true;
+
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    /**
+     * Obtener datos de un servicio específico para edición
+     */
+    public function obtenerDatosServicioParaEdicion(string $tipo, int $id): ?array
+    {
+        switch ($tipo) {
+            case 'actividad':
+                $actividad = ReservaAU::find($id);
+                if (!$actividad) return null;
+
+                return [
+                    'id' => $actividad->idAU,
+                    'nombre' => $actividad->ActividadDisplay,
+                    'precio' => $actividad->precio,
+                    'pax' => $actividad->pax,
+                    'fecha' => $actividad->start ? Carbon::parse($actividad->start)->format('Y-m-d') : '',
+                    'hora' => $actividad->start ? Carbon::parse($actividad->start)->format('H:i') : '',
+                    'moneda' => $actividad->c_moneda
+                ];
+
+            case 'yate':
+                $yate = ReservaY::find($id);
+                if (!$yate) return null;
+
+                return [
+                    'id' => $yate->idRY,
+                    'nombre' => $yate->YateDisplay,
+                    'precio' => $yate->tarifa,
+                    'pax' => $yate->pax,
+                    'fecha' => $yate->start ? Carbon::parse($yate->start)->format('Y-m-d') : '',
+                    'hora' => $yate->start ? Carbon::parse($yate->start)->format('H:i') : '',
+                    'moneda' => $yate->c_moneda
+                ];
+
+            case 'traslado':
+                $traslado = ReservaT::find($id);
+                if (!$traslado) return null;
+
+                return [
+                    'id' => $traslado->idRT,
+                    'nombre' => $traslado->nombreTransportacion ?? 'Traslado',
+                    'precio' => $traslado->TarifaDisplay,
+                    'pax' => $traslado->pax,
+                    'fecha' => $traslado->fechaArrival ? Carbon::parse($traslado->fechaArrival)->format('Y-m-d') : '',
+                    'hora' => $traslado->horaArrival ?? '',
+                    'moneda' => $traslado->c_moneda
+                ];
+
+            case 'servicio':
+                $servicio = ReservaAD::find($id);
+                if (!$servicio) return null;
+
+                return [
+                    'id' => $servicio->idAD,
+                    'nombre' => $servicio->nombreServicio ?? 'Servicio Adicional',
+                    'precio' => $servicio->precio,
+                    'pax' => $servicio->pax,
+                    'fecha' => $servicio->fecha ? Carbon::parse($servicio->fecha)->format('Y-m-d') : '',
+                    'hora' => $servicio->hora ?? '',
+                    'moneda' => $servicio->c_moneda
+                ];
+
+            case 'combo':
+                $combo = ReservaC::find($id);
+                if (!$combo) return null;
+
+                return [
+                    'id' => $combo->idRC,
+                    'nombre' => $combo->ComboDisplay ?? 'Combo',
+                    'precio' => $combo->precio,
+                    'pax' => $combo->pax,
+                    'fecha' => $combo->fecha ? Carbon::parse($combo->fecha)->format('Y-m-d') : '',
+                    'hora' => $combo->hora ?? '',
+                    'moneda' => $combo->c_moneda
+                ];
+
+            default:
+                return null;
+        }
     }
 
 }

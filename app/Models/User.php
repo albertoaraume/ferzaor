@@ -53,11 +53,10 @@ class User extends Authenticatable
 
     public function getnameRolAttribute()
     {
-
         if ($this->roles != null) {
             return $this->roles->pluck('name')->first();
         } else {
-            return '';
+            return 'hola';
         }
     }
 
@@ -66,9 +65,8 @@ class User extends Authenticatable
 
         if (Storage::disk('public')->exists('/users/admins/photos/' . $this->photo)) {
             $photo =  \Storage::disk('public')->url('/users/admins/photos/' . $this->photo);
-
         } else {
-            $photo =  asset('/build/img/icons/user-img.jpg'); ;
+            $photo =  asset('/build/img/icons/user-img.jpg');
         }
 
         return url($photo);

@@ -10,7 +10,6 @@
             <li>
                 <a href="{{ route('admin.reservas.show', $reserva->guid) }}" class="btn btn-secondary btn-sm me-2">
                     <i class="fas fa-arrow-left"></i>
-
                 </a>
             </li>
             <li>

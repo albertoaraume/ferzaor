@@ -1,0 +1,306 @@
+
+
+@props(['trasladoDetalle'])
+<div class="modal fade"
+     id="modalDetalleTraslado"
+     tabindex="-1"
+     aria-labelledby="modalDetalleTrasladoLabel"
+     aria-hidden="true"
+     wire:ignore.self
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetalleTrasladoLabel">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Detalles del traslado
+                </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if($trasladoDetalle)
+                    <div class="row">
+                        <!-- Información General -->
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Información General</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Estado:</strong></div>
+                                        <div class="col-sm-7">{!! $trasladoDetalle->Badge !!}</div>
+                                    </div>
+                                      <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Reserva:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->FolioReservaDisplay }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Folio:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->FolioDisplay }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Cupón:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->CuponDisplay }}</div>
+                                    </div>
+                                     <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Tipo:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->TipoDisplay }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>PickUp:</strong></div>
+                                        <div class="col-sm-7">
+                                            {{ $trasladoDetalle->nombreLocacionPickUp }}
+                                            <br><small class="text-muted">
+                                        {{ \Carbon\Carbon::parse($trasladoDetalle->fechaPickup)->format('d-m-Y') }}
+                                        {{ \Carbon\Carbon::parse($trasladoDetalle->horaPickup)->format('h:i A') }}
+                                    </small>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>DropOff:</strong></div>
+                                        <div class="col-sm-7">
+                                            {{ $trasladoDetalle->nombreLocacionDropOff }}
+                                           <br><small class="text-muted">
+                                        {{ \Carbon\Carbon::parse($trasladoDetalle->fechaDropOff)->format('d-m-Y') }}
+                                        {{ \Carbon\Carbon::parse($trasladoDetalle->horaDropOff)->format('h:i A') }}
+                                    </small>
+
+                                        </div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Fecha:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->start ? \Carbon\Carbon::parse($trasladoDetalle->start)->format('d/m/Y H:i') : 'N/A' }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Pax:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->PaxDisplay }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Locación:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->LocacionDisplay }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Información del Cliente -->
+                        <div class="col-md-6">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-user me-2"></i>Información del Cliente</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Cliente:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->ClienteDisplay }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Agencia:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->AgenciaDisplay }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Vendedor:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->VendedorDisplay }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Hotel:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->HotelDisplay }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Forma de Pago:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->FormaPago }}</div>
+                                    </div>
+                                    <div class="row mb-2">
+                                        <div class="col-sm-5"><strong>Moneda:</strong></div>
+                                        <div class="col-sm-7">{{ $trasladoDetalle->c_moneda }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información Financiera -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Información Financiera</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-bordered">
+                                            <thead class="table-light">
+                                                <tr>
+                                                    <th>Concepto</th>
+                                                    <th class="text-center">USD</th>
+                                                    <th class="text-center">MXN</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Tarifa</strong></td>
+                                                    <td class="text-center">
+                                                        {{ $trasladoDetalle->c_moneda == 'USD' ? '$' . number_format($trasladoDetalle->tarifa, 2) : '$0.00' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $trasladoDetalle->c_moneda == 'MXN' ? '$' . number_format($trasladoDetalle->tarifa, 2) : '$0.00' }}
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td><strong>Descuento</strong></td>
+                                                    <td class="text-center">
+                                                        {{ $trasladoDetalle->c_moneda == 'USD' ? '$' . number_format($trasladoDetalle->descuento, 2) : '$0.00' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $trasladoDetalle->c_moneda == 'MXN' ? '$' . number_format($trasladoDetalle->descuento, 2) : '$0.00' }}
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td><strong>Comisión</strong></td>
+                                                    <td class="text-center">
+                                                        {{ $trasladoDetalle->c_moneda == 'USD' ? '$' . number_format($trasladoDetalle->comision, 2) : '$0.00' }}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {{ $trasladoDetalle->c_moneda == 'MXN' ? '$' . number_format($trasladoDetalle->comision, 2) : '$0.00' }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <hr>
+                                                    </td>
+                                                </tr>
+                                                @if($trasladoDetalle->TotalCredito > 0)
+                                                <tr>
+                                                    <td><strong>Crédito</strong></td>
+                                                    <td class="text-center text-danger">
+                                                        <strong>{{ $trasladoDetalle->c_moneda == 'USD' ? '$' . number_format($trasladoDetalle->TotalCredito, 2) : '$0.00' }}</strong>
+                                                    </td>
+                                                    <td class="text-center text-danger">
+                                                       <strong> {{ $trasladoDetalle->c_moneda == 'MXN' ? '$' . number_format($trasladoDetalle->TotalCredito, 2) : '$0.00' }}</strong>
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                                  @if($trasladoDetalle->TotalBalance > 0)
+                                                <tr class="table-warning">
+                                                    <td><strong>Balance</strong></td>
+                                                    <td class="text-center text-success">
+                                                        <strong>{{ $trasladoDetalle->c_moneda == 'USD' ? '$' . number_format($trasladoDetalle->TotalBalance, 2) : '$0.00' }}</strong>
+                                                    </td>
+                                                    <td class="text-center text-success">
+                                                        <strong>{{ $trasladoDetalle->c_moneda == 'MXN' ? '$' . number_format($trasladoDetalle->TotalBalance, 2) : '$0.00' }}</strong>
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información Técnica -->
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-cogs me-2"></i>Información Técnica</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6"><strong>ID:</strong></div>
+                                                <div class="col-sm-6">{{ $trasladoDetalle->idRT }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6"><strong>Pagada:</strong></div>
+                                                <div class="col-sm-6">
+                                                      {!! $trasladoDetalle->BadgePagada !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6"><strong>Facturado:</strong></div>
+                                                <div class="col-sm-6">
+                                                    {!! $trasladoDetalle->BadgeFactura  !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="row mb-2">
+                                                <div class="col-sm-6"><strong>Crédito:</strong></div>
+                                                <div class="col-sm-6">
+                                                    <span class="badge {{ $trasladoDetalle->isCredito == true ? 'bg-warning' : 'bg-success' }}">
+                                                        {{ $trasladoDetalle->isCredito ? 'Sí' : 'No' }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Historial de cambios (si existe) -->
+                    @if($trasladoDetalle->movimientos && $trasladoDetalle->movimientos->count() > 0)
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6 class="mb-0"><i class="fas fa-history me-2"></i>Historial de Movimientos</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Fecha</th>
+                                                        <th>Usuario</th>
+                                                        <th>Status</th>
+                                                        <th>Motivo</th>
+                                                        <th>Autorizacion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($trasladoDetalle->movimientos as $movimiento)
+                                                        <tr>
+                                                            <td>{{ $movimiento->created_at ? $movimiento->created_at->format('d/m/Y H:i') : 'N/A' }}</td>
+                                                           <td>{{ $movimiento->usuario->name }}</td>
+                                                            <td>{{ $movimiento->status ?? 'N/A' }}</td>
+                                                            <td>{{ $movimiento->motivo }}</td>
+                                                            <td>{{ $movimiento->UsuarioAuth }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                @else
+                    <div class="text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-2">Cargando detalles de la traslado...</p>
+                    </div>
+                @endif
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>

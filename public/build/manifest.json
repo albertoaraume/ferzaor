@@ -1,0 +1,176 @@
+{
+  "resources/css/bootstrap.min.css": {
+    "file": "assets/bootstrap-BP5HB3ti.css",
+    "src": "resources/css/bootstrap.min.css",
+    "isEntry": true
+  },
+  "resources/css/style.css": {
+    "file": "assets/style-B50aZ3yM.css",
+    "src": "resources/css/style.css",
+    "isEntry": true
+  },
+  "resources/img/authentication/email-verification-img.jpg": {
+    "file": "assets/email-verification-img-DNV8R8Wd.jpg",
+    "src": "resources/img/authentication/email-verification-img.jpg"
+  },
+  "resources/img/authentication/forgot-password-img.jpg": {
+    "file": "assets/forgot-password-img-BlWR8heJ.jpg",
+    "src": "resources/img/authentication/forgot-password-img.jpg"
+  },
+  "resources/img/authentication/login-bg.png": {
+    "file": "assets/login-bg-BLsnydFg.png",
+    "src": "resources/img/authentication/login-bg.png"
+  },
+  "resources/img/authentication/login-img.jpg": {
+    "file": "assets/login-img-KWqn64qY.jpg",
+    "src": "resources/img/authentication/login-img.jpg"
+  },
+  "resources/img/authentication/register-img.jpg": {
+    "file": "assets/register-img-BchdHlex.jpg",
+    "src": "resources/img/authentication/register-img.jpg"
+  },
+  "resources/img/authentication/reset-password-img.jpg": {
+    "file": "assets/reset-password-img-BiVxuCvA.jpg",
+    "src": "resources/img/authentication/reset-password-img.jpg"
+  },
+  "resources/img/bg/overlay-bg.png": {
+    "file": "assets/overlay-bg-DlhozTWT.png",
+    "src": "resources/img/bg/overlay-bg.png"
+  },
+  "resources/img/bg/upgrade-bg.svg": {
+    "file": "assets/upgrade-bg-DV1rfGrz.svg",
+    "src": "resources/img/bg/upgrade-bg.svg"
+  },
+  "resources/img/icons/calendars.svg": {
+    "file": "assets/calendars-D8TCgLB3.svg",
+    "src": "resources/img/icons/calendars.svg"
+  },
+  "resources/img/icons/check.svg": {
+    "file": "assets/check-Dh-KeI54.svg",
+    "src": "resources/img/icons/check.svg"
+  },
+  "resources/img/icons/dropdown.svg": {
+    "file": "assets/dropdown-BX4_T9YR.svg",
+    "src": "resources/img/icons/dropdown.svg"
+  },
+  "resources/img/profiles/mail-user.jpg": {
+    "file": "assets/mail-user-C0E4SHQk.jpg",
+    "src": "resources/img/profiles/mail-user.jpg"
+  },
+  "resources/img/theme/bg-01.jpg": {
+    "file": "assets/bg-01-DaB7YAE3.jpg",
+    "src": "resources/img/theme/bg-01.jpg"
+  },
+  "resources/img/theme/bg-02.jpg": {
+    "file": "assets/bg-02-hL2PrH0b.jpg",
+    "src": "resources/img/theme/bg-02.jpg"
+  },
+  "resources/img/theme/bg-03.jpg": {
+    "file": "assets/bg-03-ZQVBZpAs.jpg",
+    "src": "resources/img/theme/bg-03.jpg"
+  },
+  "resources/img/theme/bg-04.jpg": {
+    "file": "assets/bg-04-CzxmxTr1.jpg",
+    "src": "resources/img/theme/bg-04.jpg"
+  },
+  "resources/img/theme/bg-05.jpg": {
+    "file": "assets/bg-05-CJ1jlIWN.jpg",
+    "src": "resources/img/theme/bg-05.jpg"
+  },
+  "resources/img/theme/bg-06.jpg": {
+    "file": "assets/bg-06-BtmdGT0l.jpg",
+    "src": "resources/img/theme/bg-06.jpg"
+  },
+  "resources/img/theme/pattern-01.png": {
+    "file": "assets/overlay-bg-DlhozTWT.png",
+    "src": "resources/img/bg/overlay-bg.png"
+  },
+  "resources/img/theme/pattern-03.png": {
+    "file": "assets/pattern-03-B-55o8H8.png",
+    "src": "resources/img/theme/pattern-03.png"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DvC42XN_.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/pages/dashboards/ventas/index.js": {
+    "file": "assets/index-Bp5NKBkj.js",
+    "name": "index",
+    "src": "resources/js/pages/dashboards/ventas/index.js",
+    "isEntry": true
+  },
+  "resources/js/pages/finanzas/ingresos/index.js": {
+    "file": "assets/index-xYFWw1sa.js",
+    "name": "index",
+    "src": "resources/js/pages/finanzas/ingresos/index.js",
+    "isEntry": true
+  },
+  "resources/js/pages/reportes/estado-cuenta.js": {
+    "file": "assets/estado-cuenta-BOTCT3Lt.js",
+    "name": "estado-cuenta",
+    "src": "resources/js/pages/reportes/estado-cuenta.js",
+    "isEntry": true
+  },
+  "resources/js/pages/reportes/reservas/actividades.js": {
+    "file": "assets/actividades-BsoSc98N.js",
+    "name": "actividades",
+    "src": "resources/js/pages/reportes/reservas/actividades.js",
+    "isEntry": true
+  },
+  "resources/js/pages/reportes/reservas/tours.js": {
+    "file": "assets/tours-BjP4hIbU.js",
+    "name": "tours",
+    "src": "resources/js/pages/reportes/reservas/tours.js",
+    "isEntry": true
+  },
+  "resources/js/pages/reportes/reservas/transportaciones.js": {
+    "file": "assets/transportaciones-YvqUeq0I.js",
+    "name": "transportaciones",
+    "src": "resources/js/pages/reportes/reservas/transportaciones.js",
+    "isEntry": true
+  },
+  "resources/js/pages/reportes/reservas/yates.js": {
+    "file": "assets/yates-DVisMZfW.js",
+    "name": "yates",
+    "src": "resources/js/pages/reportes/reservas/yates.js",
+    "isEntry": true
+  },
+  "resources/js/pages/reportes/ventas/corte-detalle.js": {
+    "file": "assets/corte-detalle-C-rYy0lq.js",
+    "name": "corte-detalle",
+    "src": "resources/js/pages/reportes/ventas/corte-detalle.js",
+    "isEntry": true
+  },
+  "resources/js/pages/reportes/ventas/cortes.js": {
+    "file": "assets/cortes-PGe1whRb.js",
+    "name": "cortes",
+    "src": "resources/js/pages/reportes/ventas/cortes.js",
+    "isEntry": true
+  },
+  "resources/js/pages/reportes/ventas/enm.js": {
+    "file": "assets/enm-hI1UDxAm.js",
+    "name": "enm",
+    "src": "resources/js/pages/reportes/ventas/enm.js",
+    "isEntry": true
+  },
+  "resources/js/pages/ventas/facturas/index.js": {
+    "file": "assets/index-BkUO4_ox.js",
+    "name": "index",
+    "src": "resources/js/pages/ventas/facturas/index.js",
+    "isEntry": true
+  },
+  "resources/js/pages/ventas/reservas/index.js": {
+    "file": "assets/index-HC_k4T_Q.js",
+    "name": "index",
+    "src": "resources/js/pages/ventas/reservas/index.js",
+    "isEntry": true
+  },
+  "resources/js/script.js": {
+    "file": "assets/script-DRT6UpA3.js",
+    "name": "script",
+    "src": "resources/js/script.js",
+    "isEntry": true
+  }
+}

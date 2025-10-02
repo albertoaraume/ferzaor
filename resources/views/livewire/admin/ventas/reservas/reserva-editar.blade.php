@@ -3,7 +3,7 @@
         <div class="add-item d-flex">
             <div class="page-title">
                 <h4 class="fw-bold">Reserva - {{ Str::upper($reserva->folio) }}</h4>
-                <h6>Agencia: {{ $reserva->nombreCliente }}</h6> {{ auth()->user()->nameRol }}
+                <h6>Agencia: {{ $reserva->nombreCliente }}</h6> 
             </div>
         </div>
         <ul class="table-top-head">

@@ -68,6 +68,8 @@ class RptCortesService
                 'zelle_mxn' => $caja->TotalTPVIZETTLE('MXN'),
                 'creditos_usd' => $caja->TotalCreditos('USD'),
                 'creditos_mxn' => $caja->TotalCreditos('MXN'),
+                'total_usd' => $caja->TotalGeneral('USD'),
+                'total_mxn' => $caja->TotalGeneral('MXN'),
                 // Agrega más campos según sea necesario
             ];
 
@@ -131,6 +133,8 @@ class RptCortesService
             'zelleMXN' => 0,
             'creditosUSD' => 0,
             'creditosMXN' => 0,
+            'totalUSD' => 0,
+            'totalMXN' => 0,
         ];
 
         foreach ($resultados as $corte) {
@@ -150,6 +154,8 @@ class RptCortesService
             $totales['zelleMXN'] += $corte['zelle_mxn'];
             $totales['creditosUSD'] += $corte['creditos_usd'];
             $totales['creditosMXN'] += $corte['creditos_mxn'];
+            $totales['totalUSD'] += $corte['total_usd'];
+            $totales['totalMXN'] += $corte['total_mxn'];
         }
 
 

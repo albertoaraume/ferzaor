@@ -8,6 +8,7 @@
         </div>
         <ul class="table-top-head">
             <li class="excel-button-container"></li>
+            <li class="copy-button-container"></li>
             <li>
                 <a data-bs-toggle="tooltip" data-bs-placement="top" title="Collapse" id="collapse-header"><i
                         class="ti ti-chevron-up"></i></a>

@@ -482,7 +482,7 @@ public function TotalCreditos( $moneda = 'USD'): float
     foreach ($relaciones as $relacion) {
         foreach ($this->$relacion() as $item) {
             $itemMoneda = $item->moneda ?? $item->c_moneda ?? null;
-            if ($itemMoneda == $moneda && !in_array($item->status, [6]) && $item->TotalCredito > 0) {
+            if ($itemMoneda == $moneda && !in_array($item->status, [0,6]) && $item->TotalCredito > 0) {
                    if (in_array($item->tipo, ['ACT']) && $item->isCambio) {
                       $total += $item->original->TotalCredito ?? 0;
                    }else{

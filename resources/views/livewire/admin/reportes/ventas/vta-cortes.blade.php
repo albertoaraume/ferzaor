@@ -98,6 +98,7 @@
                             <td colspan="2" class="text-center">PayPal</td>
                             <td colspan="2" class="text-center">Zelle</td>
                             <td colspan="2" class="text-center">Creditos</td>
+                            <td colspan="2" class="text-center">Total</td>
                         </tr>
                         <tr>
                             <td colspan="8"></td>
@@ -116,6 +117,8 @@
                             <td>USD</td>
                             <td>MXN</td>
                             <td>USD</td>
+                            <td>MXN</td>
+                             <td>USD</td>
                             <td>MXN</td>
 
                         </tr>
@@ -170,6 +173,9 @@
                                 <td class="text-end {{ $corte['zelle_mxn'] > 0 ? 'fw-bold text-info' : '' }}">{{ number_format($corte['zelle_mxn'], 2) }}</td>
                                 <td class="text-end {{ $corte['creditos_usd'] > 0 ? 'fw-bold text-info' : '' }}">{{ number_format($corte['creditos_usd'], 2) }}</td>
                                 <td class="text-end {{ $corte['creditos_mxn'] > 0 ? 'fw-bold text-info' : '' }}">{{ number_format($corte['creditos_mxn'], 2) }}</td>
+
+                                <td class="text-end {{ $corte['total_usd'] > 0 ? 'fw-bold text-info' : '' }}">{{ number_format($corte['total_usd'], 2) }}</td>
+                                <td class="text-end {{ $corte['total_mxn'] > 0 ? 'fw-bold text-info' : '' }}">{{ number_format($corte['total_mxn'], 2) }}</td>
                             </tr>
                         @empty
 
@@ -195,6 +201,10 @@
                             <td class="text-end fw-bold text-primary">{{ number_format($totales['zelleMXN'] ?? 0, 2) }}</td>
                             <td class="text-end fw-bold text-primary">{{ number_format($totales['creditosUSD'] ?? 0, 2) }}</td>
                             <td class="text-end fw-bold text-primary">{{ number_format($totales['creditosMXN'] ?? 0, 2) }}</td>
+                            <td class="text-end fw-bold text-primary">{{ number_format($totales['totalUSD'] ?? 0, 2) }}</td>
+                            <td class="text-end fw-bold text-primary">{{ number_format($totales['totalMXN'] ?? 0, 2) }}</td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

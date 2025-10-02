@@ -374,7 +374,7 @@ public function TotalTransferencias($moneda = 'USD')
         ->filter(function ($ing) use ($moneda) {
             return ($ing->c_moneda ?? null) == $moneda
                 && ($ing->c_formaPago ?? null) == '03'
-                && ($ing->uenta->idCuenta ?? null) != '19';
+                && ($ing->cuenta->idCuenta ?? null) != '19';
         })
         ->sum(function ($ing) {
             return $ing->total ?? 0;
@@ -441,7 +441,7 @@ public function TotalTPVBanco($moneda = 'USD')
     return $this->pagosTarjeta($moneda)
         ->filter(function ($ing) {
             return !in_array($ing->terminal?->tipo, [7, 8, 9]) 
-            && ($ing->cuenta->idCuenta != 4) && ($ing->cuenta->idCuenta != 19);
+            && !in_array($ing->cuenta->idCuenta , [4, 19]);
         })
         ->sum(function ($ing) {
             return $ing->total ?? 0;

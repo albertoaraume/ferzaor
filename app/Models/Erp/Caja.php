@@ -483,9 +483,9 @@ public function TotalCreditos( $moneda = 'USD'): float
             $itemMoneda = $item->moneda ?? $item->c_moneda ?? null;
             if ($itemMoneda == $moneda && !in_array($item->status, [6]) && $item->TotalCredito > 0) {
                    if (in_array($item->tipo, ['ACT']) && $item->isCambio) {
-                      $total += $item->original->Saldo ?? 0;
+                      $total += $item->original->TotalCredito ?? 0;
                    }else{
-                     $total += $item->Saldo ?? 0;
+                     $total += $item->TotalCredito ?? 0;
                    }
             }
         }

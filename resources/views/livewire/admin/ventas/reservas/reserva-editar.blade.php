@@ -8,17 +8,34 @@
         </div>
         <ul class="table-top-head">
 
-         
+
 
             <li>
                 <a data-bs-toggle="tooltip" data-bs-placement="top" title="Collapse" id="collapse-header"><i
                         class="ti ti-chevron-up"></i></a>
             </li>
         </ul>
-         <div class="page-btn mt-0">
-                    <a href="{{ route('admin.reservas.show', $reserva->guid) }}" class="btn btn-secondary"><i data-feather="arrow-left" class="me-2"></i>Volver a la reserva</a>
-                </div>
+        <div class="page-btn mt-0">
+            <a href="{{ route('admin.reservas.show', $reserva->guid) }}" class="btn btn-secondary"><i
+                    data-feather="arrow-left" class="me-2"></i>Volver a la reserva</a>
+        </div>
     </div>
+
+    @if (session()->has('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            {{ session('message') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
     <div class="row mb-4">
         <!-- Información General de la Reserva -->
@@ -188,300 +205,101 @@
                     <div class="card">
                         <div class="card-header">
                             <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="actividades-tab" data-bs-toggle="tab"
-                                        data-bs-target="#actividades" type="button" role="tab"
-                                        aria-controls="actividades" aria-selected="true">
-                                        <i class="fas fa-running me-2"></i>
-                                        Actividades ({{ $reserva->actividades->count() }})
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="yates-tab" data-bs-toggle="tab"
-                                        data-bs-target="#yates" type="button" role="tab" aria-controls="yates"
-                                        aria-selected="false">
-                                        <i class="fas fa-ship me-2"></i>
-                                        Yates ({{ $reserva->yates->count() }})
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="traslados-tab" data-bs-toggle="tab"
-                                        data-bs-target="#traslados" type="button" role="tab"
-                                        aria-controls="traslados" aria-selected="false">
-                                        <i class="fas fa-car me-2"></i>
-                                        Traslados ({{ $reserva->traslados->count() }})
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="servicios-tab" data-bs-toggle="tab"
-                                        data-bs-target="#servicios" type="button" role="tab"
-                                        aria-controls="servicios" aria-selected="false">
-                                        <i class="fas fa-concierge-bell me-2"></i>
-                                        Servicios ({{ $reserva->adicionales->count() }})
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="combos-tab" data-bs-toggle="tab"
-                                        data-bs-target="#combos" type="button" role="tab"
-                                        aria-controls="combos" aria-selected="false">
-                                        <i class="fas fa-box me-2"></i>
-                                        Combos ({{ $reserva->combos->count() }})
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pagos-tab" data-bs-toggle="tab"
-                                        data-bs-target="#pagos" type="button" role="tab" aria-controls="pagos"
-                                        aria-selected="false">
-                                        <i class="fas fa-credit-card me-2"></i>
-                                        Pagos & Ingresos
-                                        ({{ $reserva->payments->count() + $reserva->ventasReserva->count() + $reserva->FacturasRelacionadas->count() }})
-                                    </button>
-                                </li>
+                                @if ($reserva->actividades->flatMap->unidades->where('status', '!=', 0)->count() > 0)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="actividades-edit-tab" data-bs-toggle="tab"
+                                            data-bs-target="#actividades-edit" type="button" role="tab"
+                                            aria-controls="actividades-edit" aria-selected="true">
+                                            <i class="fas fa-running me-2"></i>
+                                            Actividades
+                                            ({{ $reserva->actividades->flatMap->unidades->where('status', '!=', 0)->count() }})
+                                        </button>
+                                    </li>
+                                @endif
+                                @if ($reserva->yates->where('status', '!=', 0)->count() > 0)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="yates-edit-tab" data-bs-toggle="tab"
+                                            data-bs-target="#yates-edit" type="button" role="tab"
+                                            aria-controls="yates-edit" aria-selected="false">
+                                            <i class="fas fa-ship me-2"></i>
+                                            Yates ({{ $reserva->yates->where('status', '!=', 0)->count() }})
+                                        </button>
+                                    </li>
+                                @endif
+                                @if ($reserva->traslados->where('status', '!=', 0)->count() > 0)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="traslados-edit-tab" data-bs-toggle="tab"
+                                            data-bs-target="#traslados-edit" type="button" role="tab"
+                                            aria-controls="traslados-edit" aria-selected="false">
+                                            <i class="fas fa-car me-2"></i>
+                                            Traslados ({{ $reserva->traslados->where('status', '!=', 0)->count() }})
+                                        </button>
+                                    </li>
+                                @endif
+                                @if ($reserva->adicionales->where('status', '!=', 0)->count() > 0)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="servicios-edit-tab" data-bs-toggle="tab"
+                                            data-bs-target="#servicios-edit" type="button" role="tab"
+                                            aria-controls="servicios-edit" aria-selected="false">
+                                            <i class="fas fa-concierge-bell me-2"></i>
+                                            Servicios ({{ $reserva->adicionales->where('status', '!=', 0)->count() }})
+                                        </button>
+                                    </li>
+                                @endif
+                                @if ($reserva->combos->where('status', '!=', 0)->count() > 0)
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="combos-edit-tab" data-bs-toggle="tab"
+                                            data-bs-target="#combos-edit" type="button" role="tab"
+                                            aria-controls="combos-edit" aria-selected="false">
+                                            <i class="fas fa-box me-2"></i>
+                                            Combos ({{ $reserva->combos->where('status', '!=', 0)->count() }})
+                                        </button>
+                                    </li>
+                                @endif
+
                             </ul>
                         </div>
                         <div class="card-body">
                             <div class="tab-content">
-                                <!-- Tab Actividades -->
-                                <div class="tab-pane fade show active" id="actividades" role="tabpanel"
-                                    aria-labelledby="actividades-tab">
-                                    <x-admin.reserva-actividades :actividades="$reserva->actividades" />
-                                </div>
+                                     <!-- Tab Actividades -->
+                        @if($reserva->actividades->flatMap->unidades->where('status', '!=', 0)->count() > 0)
+                        <div class="tab-pane fade show active" id="actividades-edit" role="tabpanel"
+                            aria-labelledby="actividades-edit-tab">
+                            @include('livewire.admin.ventas.reservas.partials.actividades-edit')
+                        </div>
+                        @endif
 
-                                <!-- Tab Yates -->
-                                <div class="tab-pane fade" id="yates" role="tabpanel"
-                                    aria-labelledby="yates-tab">
-                                    <x-admin.reserva-yates :yates="$reserva->yates" />
-                                </div>
+                        <!-- Tab Yates -->
+                        @if($reserva->yates->where('status', '!=', 0)->count() > 0)
+                        <div class="tab-pane fade {{ $reserva->actividades->flatMap->unidades->where('status', '!=', 0)->count() == 0 ? 'show active' : '' }}"
+                            id="yates-edit" role="tabpanel" aria-labelledby="yates-edit-tab">
+                            @include('livewire.admin.ventas.reservas.partials.yates-edit')
+                        </div>
+                        @endif
 
-                                <!-- Tab Traslados -->
-                                <div class="tab-pane fade" id="traslados" role="tabpanel"
-                                    aria-labelledby="traslados-tab">
-                                    <x-admin.reserva-traslados :traslados="$reserva->traslados" />
-                                </div>
+                        <!-- Tab Traslados -->
+                        @if($reserva->traslados->where('status', '!=', 0)->count() > 0)
+                        <div class="tab-pane fade" id="traslados-edit" role="tabpanel"
+                            aria-labelledby="traslados-edit-tab">
+                            @include('livewire.admin.ventas.reservas.partials.traslados-edit')
+                        </div>
+                        @endif
 
-                                <!-- Tab Servicios -->
-                                <div class="tab-pane fade" id="servicios" role="tabpanel"
-                                    aria-labelledby="servicios-tab">
-                                    <x-admin.reserva-servicios :servicios="$reserva->adicionales" />
-                                </div>
+                        <!-- Tab Servicios -->
+                        @if($reserva->adicionales->where('status', '!=', 0)->count() > 0)
+                        <div class="tab-pane fade" id="servicios-edit" role="tabpanel"
+                            aria-labelledby="servicios-edit-tab">
+                            @include('livewire.admin.ventas.reservas.partials.servicios-edit')
+                        </div>
+                        @endif
 
-                                <!-- Tab Combos -->
-                                <div class="tab-pane fade" id="combos" role="tabpanel"
-                                    aria-labelledby="combos-tab">
-                                    <x-admin.reserva-combos :combos="$reserva->combos" />
-                                </div>
-
-                                <!-- Tab Pagos e Ingresos -->
-                                <div class="tab-pane fade" id="pagos" role="tabpanel"
-                                    aria-labelledby="pagos-tab">
-                                    <div class="row">
-                                        <!-- Pagos en línea -->
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h6 class="mb-0">
-                                                        <i class="fas fa-globe me-2"></i>
-                                                        Pagos en Línea
-                                                        ({{ $reserva->payments->count() }})
-                                                    </h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    @if ($reserva->payments->count() > 0)
-                                                        <div class="table-responsive">
-                                                            <table class="table table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Método</th>
-                                                                        <th>Monto</th>
-                                                                        <th>Moneda</th>
-                                                                        <th>Estado</th>
-                                                                        <th>Fecha</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($reserva->payments as $payment)
-                                                                        <tr>
-                                                                            <td>
-                                                                                <span
-                                                                                    class="badge bg-primary">{{ $payment->method }}</span>
-                                                                            </td>
-                                                                            <td>${{ number_format($payment->amount, 2) }}
-                                                                            </td>
-                                                                            <td>{{ $payment->currency }}
-                                                                            </td>
-                                                                            <td>
-                                                                                @switch($payment->status)
-                                                                                    @case('approved')
-                                                                                        <span
-                                                                                            class="badge bg-success">Aprobado</span>
-                                                                                    @break
-
-                                                                                    @case('pending')
-                                                                                        <span
-                                                                                            class="badge bg-warning">Pendiente</span>
-                                                                                    @break
-
-                                                                                    @case('rejected')
-                                                                                        <span
-                                                                                            class="badge bg-danger">Rechazado</span>
-                                                                                    @break
-
-                                                                                    @default
-                                                                                        <span
-                                                                                            class="badge bg-secondary">{{ $payment->status }}</span>
-                                                                                @endswitch
-                                                                            </td>
-                                                                            <td>{{ $payment->payment_date ? \Carbon\Carbon::parse($payment->payment_date)->format('d/m/Y H:i') : 'N/A' }}
-                                                                            </td>
-                                                                        </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    @else
-                                                        <div class="alert alert-info">
-                                                            <i class="fas fa-info-circle me-2"></i>
-                                                            No hay pagos en línea registrados para esta
-                                                            reserva.
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Ingresos relacionados -->
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h6 class="mb-0">
-                                                        <i class="fas fa-money-check me-2"></i>
-                                                        Ingresos y Facturas Relacionados
-                                                        ({{ $reserva->ventasReserva->count() + $reserva->FacturasRelacionadas->count() }})
-                                                    </h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    @if ($reserva->ventasReserva->count() > 0 || $reserva->FacturasRelacionadas->count() > 0)
-                                                        <div class="table-responsive">
-                                                            <table class="table table-sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Tipo</th>
-                                                                        <th>ID</th>
-                                                                        <th>Folio</th>
-                                                                        <th>Fecha</th>
-                                                                        <th>Descripción</th>
-                                                                        <th>Importe</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($reserva->ventasReserva as $venta)
-                                                                        @foreach ($venta->venta->ingresos as $ingresoVenta)
-                                                                            <tr>
-                                                                                <td>Ingreso</td>
-                                                                                <td>{{ $ingresoVenta->ingreso->idIngreso }}
-                                                                                </td>
-                                                                                <td>{{ $ingresoVenta->ingreso->folio }}
-                                                                                </td>
-
-                                                                                <td>{{ $ingresoVenta->ingreso->fechaAplica ? \Carbon\Carbon::parse($ingresoVenta->ingreso->fechaAplica)->format('d/m/Y') : 'N/A' }}
-                                                                                </td>
-                                                                                <td>{{ $ingresoVenta->ingreso->descripcionFormaPago ?? 'N/A' }}
-                                                                                </td>
-
-                                                                                <td>${{ number_format($ingresoVenta->total, 2) }}
-                                                                                </td>
-
-
-                                                                            </tr>
-                                                                        @endforeach
-                                                                    @endforeach
-
-                                                                    @foreach ($reserva->FacturasRelacionadas as $factura)
-                                                                        <tr>
-                                                                            <td>Factura</td>
-                                                                            <td>{{ $factura->c_cfdiConcepto ?? 'N/A' }}
-                                                                            </td>
-                                                                            <td>{{ $factura->comprobante->FolioDisplay ?? 'N/A' }}
-                                                                            </td>
-
-                                                                            <td>{{ \Carbon\Carbon::parse($factura->comprobante->fechaCreacion)->format('d-m-Y') }}
-                                                                            </td>
-                                                                            <td>{{ $factura->comprobante->tipoComprobanteDescription }}
-                                                                            </td>
-                                                                            <td>${{ number_format($factura->total, 2) }}
-                                                                            </td>
-
-
-                                                                        </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    @else
-                                                        <div class="alert alert-info">
-                                                            <i class="fas fa-info-circle me-2"></i>
-                                                            No hay ingresos relacionados registrados
-                                                            para esta
-                                                            reserva.
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Resumen de pagos -->
-                                    <div class="row mt-3">
-                                        <div class="col-12">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h6 class="mb-0">
-                                                        <i class="fas fa-calculator me-2"></i>
-                                                        Resumen de Pagos
-                                                    </h6>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-3">
-                                                            <div class="text-center">
-                                                                <h6 class="text-muted mb-0">Total Pagos POS
-                                                                </h6>
-                                                                <h5 class="text-primary">
-                                                                    ${{ number_format($reserva->PagoBalance, 2) }}
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="text-center">
-                                                                <h6 class="text-muted mb-0">Total Facturado</h6>
-                                                                <h5 class="text-info">
-                                                                    ${{ number_format($reserva->PagoCredito, 2) }}
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="text-center">
-                                                                <h6 class="text-muted mb-0">Total Pagos
-                                                                    Online
-                                                                </h6>
-                                                                <h5 class="text-success">
-                                                                    ${{ number_format($reserva->payments->where('status', 'approved')->sum('amount'), 2) }}
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <div class="text-center">
-                                                                <h6 class="text-muted mb-0">Estado de
-                                                                    Pago</h6>
-                                                                <h5>{!! $reserva->BadgePagada !!}</h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <!-- Tab Combos -->
+                        @if($reserva->combos->where('status', '!=', 0)->count() > 0)
+                        <div class="tab-pane fade" id="combos-edit" role="tabpanel"
+                            aria-labelledby="combos-edit-tab">
+                            @include('livewire.admin.ventas.reservas.partials.combos-edit')
+                        </div>
+                        @endif
                             </div>
                         </div>
                     </div>

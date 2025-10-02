@@ -547,7 +547,7 @@ public function TotalGeneral( $moneda = 'USD'): float
             return $ing->total ?? 0;
         });
 
-    $total += $this->TotalCreditos($moneda);
+   // $total += $this->TotalCreditos($moneda);
 
     return $total;
 }

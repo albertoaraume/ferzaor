@@ -440,7 +440,7 @@ public function TotalTPVBanco($moneda = 'USD')
 {
     return $this->pagosTarjeta($moneda)
         ->filter(function ($ing) {
-            return !in_array(($ing->terminal->tipo ?? null), [7, 8, 9]) 
+            return !in_array($ing->terminal?->tipo, [7, 8, 9]) 
             && ($ing->cuenta->idCuenta != 4) && ($ing->cuenta->idCuenta != 19);
         })
         ->sum(function ($ing) {

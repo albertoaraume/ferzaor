@@ -62,6 +62,7 @@ dataTable = $('#cortesTable').DataTable({
 "bFilter": true,
 "sDom": 'fBtlpi',
 "ordering": true,
+"order": [[ 4, "desc" ]], // Ordenar por la segunda columna (índice 1) de forma descendente
 buttons: [
 {
 extend: 'excel',

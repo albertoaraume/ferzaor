@@ -34,7 +34,8 @@
                                       $descuento += $foto->descuento;
                                       $importe += $foto->importe;
                                   @endphp
-                                  <tr>
+                                  <tr class="{{ $foto->edo == false ? 'table-danger' : '' }}"
+                      style="{{ $foto->edo == false ? 'text-decoration: line-through; text-decoration-color: #dc3545; text-decoration-thickness: 2px;' : '' }}">
                                       <td>{{ $foto->idVF }}</td>
                                       <td>{{ $foto->foto->cupon?->cupon ?? '' }}</td>
                                       <td>{{ $foto->descripcion ?? 'N/A' }}</td>

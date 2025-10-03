@@ -529,10 +529,10 @@ public function TotalVentas( $moneda = 'USD'): float
     ->where('status', '>', 0)
 
         ->filter(function ($ing) use ($moneda) {
-            return ($ing->c_moneda ?? null) == $moneda;
+            return ($ing->ingreso->c_moneda ?? null) == $moneda;
         })
         ->sum(function ($ing) {
-            return $ing->importe ?? 0;
+            return $ing->ingreso->importe ?? 0;
         });
 
 
@@ -553,10 +553,10 @@ public function TotalComisiones( $moneda = 'USD'): float
     ->where('status', '>', 0)
 
         ->filter(function ($ing) use ($moneda) {
-            return ($ing->c_moneda ?? null) == $moneda;
+            return ($ing->ingreso->c_moneda ?? null) == $moneda;
         })
         ->sum(function ($ing) {
-            return $ing->comision ?? 0;
+            return $ing->ingreso->comision ?? 0;
         });
 }
 
@@ -572,10 +572,10 @@ public function TotalGeneral( $moneda = 'USD'): float
     })
 
         ->filter(function ($ing) use ($moneda) {
-            return ($ing->c_moneda ?? null) == $moneda;
+            return ($ing->ingreso->c_moneda ?? null) == $moneda;
         })
         ->sum(function ($ing) {
-            return $ing->total ?? 0;
+            return $ing->ingreso->total ?? 0;
         });
 
    $total += $this->TotalCreditos($moneda);

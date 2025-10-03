@@ -356,8 +356,12 @@ public function ENMNoPagadosConvenio(): collection
  */
 public function TotalEfectivo($moneda = 'USD')
 {
-    return $this->ingresos
-        ->where('status', '>', 0)
+    return $this->ventas
+    ->where('status', '>', 0) // Solo ventas activas
+    ->flatMap(function ($venta) {
+        return $venta->ingresos;
+    })
+    ->where('status', '>', 0)
         ->filter(function ($ing) use ($moneda) {
             return  ($ing->c_moneda ?? null) == $moneda
                 && ($ing->c_formaPago ?? null) == '01';
@@ -369,8 +373,12 @@ public function TotalEfectivo($moneda = 'USD')
 
 public function TotalTransferencias($moneda = 'USD')
 {
-    return $this->ingresos
-        ->where('status', '>', 0)
+    return $this->ventas
+    ->where('status', '>', 0) // Solo ventas activas
+    ->flatMap(function ($venta) {
+        return $venta->ingresos;
+    })
+    ->where('status', '>', 0)      
         ->filter(function ($ing) use ($moneda) {
             return ($ing->c_moneda ?? null) == $moneda
                 && ($ing->c_formaPago ?? null) == '03'
@@ -389,8 +397,12 @@ public function TotalTransferencias($moneda = 'USD')
  */
 public function pagosTarjeta($moneda = 'USD'): Collection
 {
-    return $this->ingresos
-        ->where('status', '>', 0)
+    return $this->ventas
+    ->where('status', '>', 0) // Solo ventas activas
+    ->flatMap(function ($venta) {
+        return $venta->ingresos;
+    }) 
+    ->where('status', '>', 0)
         ->filter(function ($ing) use ($moneda) {
             return ($ing->c_moneda ?? null) == $moneda
                 && in_array(($ing->c_formaPago ?? null), ['04', '28']);
@@ -401,8 +413,12 @@ public function pagosTarjeta($moneda = 'USD'): Collection
 
 public function TotalPayPal($moneda = 'USD')
 {
-    return $this->ingresos
-        ->where('status', '>', 0)
+    return $this->ventas
+    ->where('status', '>', 0) // Solo ventas activas
+    ->flatMap(function ($venta) {
+        return $venta->ingresos;
+    })
+    ->where('status', '>', 0)
         ->filter(function ($ing) use ($moneda) {
             return  ($ing->c_moneda ?? null) == $moneda
                 && ($ing->cuenta->tipo ?? null) == '3';
@@ -450,8 +466,12 @@ public function TotalTPVBanco($moneda = 'USD')
 
 public function TotalMercadoPago($moneda = 'USD')
 {
-    return $this->ingresos
-        ->where('status', '>', 0)
+    return $this->ventas
+    ->where('status', '>', 0) // Solo ventas activas
+    ->flatMap(function ($venta) {
+        return $venta->ingresos;
+    })
+    ->where('status', '>', 0)
 
         ->filter(function ($ing) use ($moneda) {
             return  ($ing->c_moneda ?? null) == $moneda
@@ -503,8 +523,12 @@ public function TotalVentas( $moneda = 'USD'): float
 
     //$total += $this->ventas->where('status', '>', 0)->where('c_moneda', $moneda)->sum('subTotal') ?? 0;
 
-   $total += $this->ingresos
-        ->where('status', '>', 0)
+   $total += $this->ventas
+    ->where('status', '>', 0) // Solo ventas activas
+    ->flatMap(function ($venta) {
+        return $venta->ingresos;
+    })
+    ->where('status', '>', 0)
 
         ->filter(function ($ing) use ($moneda) {
             return ($ing->c_moneda ?? null) == $moneda;
@@ -523,8 +547,12 @@ public function TotalVentas( $moneda = 'USD'): float
 public function TotalComisiones( $moneda = 'USD'): float
 {
 
-    return $this->ingresos
-        ->where('status', '>', 0)
+    return $this->ventas
+    ->where('status', '>', 0) // Solo ventas activas
+    ->flatMap(function ($venta) {
+        return $venta->ingresos;
+    })
+    ->where('status', '>', 0)
 
         ->filter(function ($ing) use ($moneda) {
             return ($ing->c_moneda ?? null) == $moneda;
@@ -539,8 +567,12 @@ public function TotalGeneral( $moneda = 'USD'): float
     $total = 0;
 
 
-  $total += $this->ingresos
-        ->where('status', '>', 0)
+  $total += $this->ventas
+    ->where('status', '>', 0) // Solo ventas activas
+    ->flatMap(function ($venta) {
+        return $venta->ingresos;
+    })
+    ->where('status', '>', 0)
         ->filter(function ($ing) use ($moneda) {
             return ($ing->c_moneda ?? null) == $moneda;
         })

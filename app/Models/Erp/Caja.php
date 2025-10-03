@@ -361,7 +361,7 @@ public function TotalEfectivo($moneda = 'USD')
     ->flatMap(function ($venta) {
         return $venta->ingresos;
     })
-    ->where('status', '>', 0)
+   
         ->filter(function ($ing) use ($moneda) {
             return  ($ing->c_moneda ?? null) == $moneda
                 && ($ing->c_formaPago ?? null) == '01';
@@ -572,7 +572,7 @@ public function TotalGeneral( $moneda = 'USD'): float
     ->flatMap(function ($venta) {
         return $venta->ingresos;
     })
-    ->where('status', '>', 0)
+
         ->filter(function ($ing) use ($moneda) {
             return ($ing->c_moneda ?? null) == $moneda;
         })

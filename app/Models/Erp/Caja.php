@@ -432,10 +432,10 @@ public function TotalTPVClip($moneda = 'USD')
 {
     return $this->pagosTarjeta($moneda)
         ->filter(function ($ing) {
-            return ($ing->terminal->tipo ?? null) == '9';
+            return ($ing->ingreso->terminal->tipo ?? null) == '9';
         })
         ->sum(function ($ing) {
-            return $ing->total ?? 0;
+            return $ing->ingreso->total ?? 0;
         });
 }
 
@@ -443,10 +443,10 @@ public function TotalTPVIZETTLE($moneda = 'USD')
 {
     return $this->pagosTarjeta($moneda)
         ->filter(function ($ing) {
-            return ($ing->terminal->tipo ?? null) == '8';
+            return ($ing->ingreso->terminal->tipo ?? null) == '8';
         })
         ->sum(function ($ing) {
-            return $ing->total ?? 0;
+            return $ing->ingreso->total ?? 0;
         });
 }
 

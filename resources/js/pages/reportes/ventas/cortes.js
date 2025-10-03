@@ -54,18 +54,28 @@ dataTable = $('#cortesTable').DataTable({
 "responsive": false,
 "autoWidth": false,
 "scrollX": true,
+"pageLength": -1,
 "lengthMenu": [
-[10, 25, 50, 100, -1],
-[10, 25, 50, 100, "Todos"]
+[-1, 10, 25, 50, 100],
+["Todos", 10, 25, 50, 100]
 ],
 "bFilter": true,
 "sDom": 'fBtlpi',
 "ordering": true,
+"order": [[ 4, "asc" ]], // Ordenar por la segunda columna (índice 1) de forma ascendente
 buttons: [
 {
 extend: 'excel',
 text: '<i class="fas fa-file-excel"></i> Exportar a Excel',
 className: 'btn btn-success btn-sm',
+exportOptions: {
+columns: ':visible:not(:first-child)'
+}
+},
+{
+extend: 'copy',
+text: '<i class="fas fa-file-copy"></i> Copiar',
+className: 'btn btn-secondary btn-sm',
 exportOptions: {
 columns: ':visible:not(:first-child)'
 }
@@ -132,6 +142,13 @@ moverElementosDataTable();
 if ($('.excel-button-container .buttons-excel').length === 0 && $('.dt-buttons .buttons-excel').length > 0) {
 $('.dt-buttons .buttons-excel').appendTo('.excel-button-container');
 }
+
+// Agregar el movimiento del botón de copiar
+if ($('.copy-button-container .buttons-copy').length === 0 && $('.dt-buttons .buttons-copy').length > 0) {
+$('.dt-buttons .buttons-copy').appendTo('.copy-button-container');
+}
+
+
 }
 
 function moverElementosDataTable() {
@@ -157,6 +174,13 @@ $('.dataTables_info').removeClass('dataTables_info');
 if ($('.dt-buttons .buttons-excel').length && $('.excel-button-container').length) {
 $('.dt-buttons .buttons-excel').appendTo('.excel-button-container');
 }
+
+// Mover el botón de copiar si existe
+if ($('.dt-buttons .buttons-copy').length && $('.copy-button-container').length) {
+$('.dt-buttons .buttons-copy').appendTo('.copy-button-container');  
+}
+
+
 }
 
 

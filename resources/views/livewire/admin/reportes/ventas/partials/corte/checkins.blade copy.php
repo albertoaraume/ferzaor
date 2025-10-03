@@ -27,7 +27,8 @@
                             <td colspan="2" class="text-center">Descuento</td>
                             <td colspan="2" class="text-center">Credito</td>
                             <td colspan="2" class="text-center">Balance</td>
-
+                            <td colspan="2" class="text-center">Abono</td>
+                            <td colspan="2" class="text-center">Saldo</td>
                         </tr>
                         <tr>
                             <td colspan="9"></td>
@@ -40,7 +41,10 @@
                             <td class="text-center">MXN</td>
                             <td class="text-center">USD</td>
                             <td class="text-center">MXN</td>
-
+                             <td class="text-center">USD</td>
+                            <td class="text-center">MXN</td>
+                             <td class="text-center">USD</td>
+                            <td class="text-center">MXN</td>
                     </thead>
                     <tbody>
                         @php
@@ -52,7 +56,10 @@
                             $creditoMXN = 0;
                             $balanceUSD = 0;
                             $balanceMXN = 0;
-
+                            $abonoUSD = 0;
+                            $abonoMXN = 0;
+                            $saldoUSD = 0;
+                            $saldoMXN = 0;
                         @endphp
                         @foreach ($corte->checkinsActividadesRelacionadas()->sortByDesc('created_at') as $act)
                             @php
@@ -61,13 +68,15 @@
                                     $descuentoUSD += $act->descuento;
                                     $creditoUSD += $act->TotalCredito;
                                     $balanceUSD += $act->TotalBalance;
-
+                                    $abonoUSD += $act->Pagos;
+                                    $saldoUSD += $act->Saldo;
                                 } elseif ($act->c_moneda == 'MXN') {
                                     $tarifaMXN += $act->tarifa;
                                     $descuentoMXN += $act->descuento;
                                     $creditoMXN += $act->TotalCredito;
                                     $balanceMXN += $act->TotalBalance;
-
+                                    $abonoMXN += $act->Pagos;
+                                    $saldoMXN += $act->Saldo;
                                 }
                             @endphp
 
@@ -137,7 +146,22 @@
                                     class="{{ $act->c_moneda == 'MXN' && $act->TotalBalance > 0 ? 'text-info' : 'text-muted' }}">
                                     <strong>${{ number_format($act->c_moneda == 'MXN' ? $act->TotalBalance : 0, 2) }}</strong>
                                 </td>
-
+                                 <td
+                                    class="{{ $act->c_moneda == 'USD' && $act->Pagos > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($act->c_moneda == 'USD' ? $act->Pagos : 0, 2) }}</strong>
+                                </td>
+                                    <td
+                                        class="{{ $act->c_moneda == 'MXN' && $act->Pagos > 0 ? 'text-info' : 'text-muted' }}">
+                                        <strong>${{ number_format($act->c_moneda == 'MXN' ? $act->Pagos : 0, 2) }}</strong>
+                                    </td>
+                                <td
+                                    class="{{ $act->c_moneda == 'USD' && $act->Saldo > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($act->c_moneda == 'USD' ? $act->Saldo : 0, 2) }}</strong>
+                                </td>
+                                <td
+                                    class="{{ $act->c_moneda == 'MXN' && $act->Saldo > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($act->c_moneda == 'MXN' ? $act->Saldo : 0, 2) }}</strong>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -169,7 +193,18 @@
                             <td class="text-center">
                                 <strong class="text-warning">${{ number_format($balanceMXN, 2) }}</strong>
                             </td>
-
+                                <td class="text-center">
+                                    <strong class="text-info">${{ number_format($abonoUSD, 2) }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <strong class="text-warning">${{ number_format($abonoMXN, 2) }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <strong class="text-info">${{ number_format($saldoUSD, 2) }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <strong class="text-warning">${{ number_format($saldoMXN, 2) }}</strong>
+                                </td>
                             </tr>
                     </tfoot>
                 </table>
@@ -206,7 +241,8 @@
                             <td colspan="2" class="text-center">Descuento</td>
                             <td colspan="2" class="text-center">Credito</td>
                             <td colspan="2" class="text-center">Balance</td>
-
+                             <td colspan="2" class="text-center">Abono</td>
+                            <td colspan="2" class="text-center">Saldo</td>
                         </tr>
                         <tr>
                             <td colspan="9"></td>
@@ -219,7 +255,10 @@
                             <td class="text-center">MXN</td>
                             <td class="text-center">USD</td>
                             <td class="text-center">MXN</td>
-
+                             <td class="text-center">USD</td>
+                            <td class="text-center">MXN</td>
+                             <td class="text-center">USD</td>
+                            <td class="text-center">MXN</td>
                     </thead>
                     <tbody>
                          @php
@@ -231,7 +270,10 @@
                             $creditoMXN = 0;
                             $balanceUSD = 0;
                             $balanceMXN = 0;
-
+                            $abonoUSD = 0;
+                            $abonoMXN = 0;
+                            $saldoUSD = 0;
+                            $saldoMXN = 0;
                         @endphp
                         @foreach ($corte->checkinsYatesRelacionadas()->sortByDesc('created_at') as $yat)
                          @php
@@ -240,13 +282,15 @@
                                     $descuentoUSD += $yat->descuento;
                                     $creditoUSD += $yat->TotalCredito;
                                     $balanceUSD += $yat->TotalBalance;
-
+                                    $abonoUSD += $yat->Pagos;
+                                    $saldoUSD += $yat->Saldo;
                                 } elseif ($yat->c_moneda == 'MXN') {
                                     $tarifaMXN += $yat->tarifa;
                                     $descuentoMXN += $yat->descuento;
                                     $creditoMXN += $yat->TotalCredito;
                                     $balanceMXN += $yat->TotalBalance;
-
+                                    $abonoMXN += $yat->Pagos;
+                                    $saldoMXN += $yat->Saldo;
                                 }
                             @endphp
 
@@ -320,7 +364,22 @@
                                 </td>
 
 
-
+                                 <td
+                                    class="{{ $yat->c_moneda == 'USD' && $yat->Pagos > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($yat->c_moneda == 'USD' ? $yat->Pagos : 0, 2) }}</strong>
+                                </td>
+                                <td
+                                    class="{{ $yat->c_moneda == 'MXN' && $yat->Pagos > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($yat->c_moneda == 'MXN' ? $yat->Pagos : 0, 2) }}</strong>
+                                </td>
+                                <td
+                                    class="{{ $yat->c_moneda == 'USD' && $yat->Saldo > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($yat->c_moneda == 'USD' ? $yat->Saldo : 0, 2) }}</strong>
+                                </td>
+                                <td
+                                    class="{{ $yat->c_moneda == 'MXN' && $yat->Saldo > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($yat->c_moneda == 'MXN' ? $yat->Saldo : 0, 2) }}</strong>
+                                </td>
 
                             </tr>
                         @endforeach
@@ -353,7 +412,18 @@
                             <td class="text-center">
                                 <strong class="text-warning">${{ number_format($balanceMXN, 2) }}</strong>
                             </td>
-
+                                <td class="text-center">
+                                        <strong class="text-info">${{ number_format($abonoUSD, 2) }}</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong class="text-warning">${{ number_format($abonoMXN, 2) }}</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong class="text-info">${{ number_format($saldoUSD, 2) }}</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong class="text-warning">${{ number_format($saldoMXN, 2) }}</strong>
+                                    </td>
                         </tr>
                     </tfoot>
                 </table>
@@ -395,7 +465,8 @@
                             <td colspan="2" class="text-center">Descuento</td>
                             <td colspan="2" class="text-center">Credito</td>
                             <td colspan="2" class="text-center">Balance</td>
-
+                             <td colspan="2" class="text-center">Abono</td>
+                            <td colspan="2" class="text-center">Saldo</td>
                         </tr>
                         <tr>
                             <td colspan="11"></td>
@@ -408,7 +479,10 @@
                             <td class="text-center">MXN</td>
                             <td class="text-center">USD</td>
                             <td class="text-center">MXN</td>
-
+                            <td class="text-center">USD</td>
+                            <td class="text-center">MXN</td>
+                            <td class="text-center">USD</td>
+                            <td class="text-center">MXN</td>
                     </thead>
                     <tbody>
                          @php
@@ -420,7 +494,10 @@
                             $creditoMXN = 0;
                             $balanceUSD = 0;
                             $balanceMXN = 0;
-
+                            $abonoUSD = 0;
+                            $abonoMXN = 0;
+                            $saldoUSD = 0;
+                            $saldoMXN = 0;
                         @endphp
                         @foreach ($corte->checkinsTransportacionesRelacionadas()->sortByDesc('created_at') as $tra)
                          @php
@@ -429,13 +506,15 @@
                                     $descuentoUSD += $tra->descuento;
                                     $creditoUSD += $tra->TotalCredito;
                                     $balanceUSD += $tra->TotalBalance;
-
+                                    $abonoUSD += $tra->Pagos;
+                                    $saldoUSD += $tra->Saldo;
                                 } elseif ($tra->c_moneda == 'MXN') {
                                     $tarifaMXN += $tra->tarifa;
                                     $descuentoMXN += $tra->descuento;
                                     $creditoMXN += $tra->TotalCredito;
                                     $balanceMXN += $tra->TotalBalance;
-
+                                    $abonoMXN += $tra->Pagos;
+                                    $saldoMXN += $tra->Saldo;
                                 }
                             @endphp
 
@@ -525,7 +604,22 @@
                                     class="{{ $tra->c_moneda == 'MXN' && $tra->TotalBalance > 0 ? 'text-info' : 'text-muted' }}">
                                     <strong>${{ number_format($tra->c_moneda == 'MXN' ? $tra->TotalBalance : 0, 2) }}</strong>
                                 </td>
-
+                                    <td
+                                        class="{{ $tra->c_moneda == 'USD' && $tra->Pagos > 0 ? 'text-info' : 'text-muted' }}">
+                                        <strong>${{ number_format($tra->c_moneda == 'USD' ? $tra->Pagos : 0, 2) }}</strong>
+                                    </td>
+                                    <td
+                                        class="{{ $tra->c_moneda == 'MXN' && $tra->Pagos > 0 ? 'text-info' : 'text-muted' }}">
+                                        <strong>${{ number_format($tra->c_moneda == 'MXN' ? $tra->Pagos : 0, 2) }}</strong>
+                                    </td>
+                                <td
+                                    class="{{ $tra->c_moneda == 'USD' && $tra->Saldo > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($tra->c_moneda == 'USD' ? $tra->Saldo : 0, 2) }}</strong>
+                                </td>
+                                <td
+                                    class="{{ $tra->c_moneda == 'MXN' && $tra->Saldo > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($tra->c_moneda == 'MXN' ? $tra->Saldo : 0, 2) }}</strong>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -557,7 +651,18 @@
                             <td class="text-center">
                                 <strong class="text-warning">${{ number_format($balanceMXN, 2) }}</strong>
                             </td>
-
+                                <td class="text-center">
+                                        <strong class="text-info">${{ number_format($abonoUSD, 2) }}</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong class="text-warning">${{ number_format($abonoMXN, 2) }}</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong class="text-info">${{ number_format($saldoUSD, 2) }}</strong>
+                                    </td>
+                                    <td class="text-center">
+                                        <strong class="text-warning">${{ number_format($saldoMXN, 2) }}</strong>
+                                    </td>
                         </tr>
                     </tfoot>
                 </table>
@@ -596,7 +701,8 @@
 
                             <td colspan="2" class="text-center">Credito</td>
                             <td colspan="2" class="text-center">Balance</td>
-
+                            <td colspan="2" class="text-center">Abono</td>
+                            <td colspan="2" class="text-center">Saldo</td>
                         </tr>
                         <tr>
                             <td colspan="9"></td>
@@ -608,7 +714,10 @@
                             <td class="text-center">USD</td>
                             <td class="text-center">MXN</td>
 
-
+                             <td class="text-center">USD</td>
+                            <td class="text-center">MXN</td>
+                             <td class="text-center">USD</td>
+                            <td class="text-center">MXN</td>
                     </thead>
                     <tbody>
                         @php
@@ -619,7 +728,10 @@
                             $creditoMXN = 0;
                             $balanceUSD = 0;
                             $balanceMXN = 0;
-
+                            $abonoUSD = 0;
+                            $abonoMXN = 0;
+                            $saldoUSD = 0;
+                            $saldoMXN = 0;
                         @endphp
                         @foreach ($corte->checkinsServiciosRelacionadas()->sortByDesc('created_at') as $serv)
                             @php
@@ -628,13 +740,15 @@
 
                                     $creditoUSD += $serv->TotalCredito;
                                     $balanceUSD += $serv->TotalBalance;
-
+                                    $abonoUSD += $serv->Pagos;
+                                    $saldoUSD += $serv->Saldo;
                                 } elseif ($serv->c_moneda == 'MXN') {
                                     $tarifaMXN += $serv->precio;
 
                                     $creditoMXN += $serv->TotalCredito;
                                     $balanceMXN += $serv->TotalBalance;
-
+                                    $abonoMXN += $serv->Pagos;
+                                    $saldoMXN += $serv->Saldo;
                                 }
                             @endphp
 
@@ -693,7 +807,22 @@
                                     class="{{ $serv->c_moneda == 'MXN' && $serv->TotalBalance > 0 ? 'text-info' : 'text-muted' }}">
                                     <strong>${{ number_format($serv->c_moneda == 'MXN' ? $serv->TotalBalance : 0, 2) }}</strong>
                                 </td>
-
+                                 <td
+                                    class="{{ $serv->c_moneda == 'USD' && $serv->Pagos > 0 ? 'text-info' : 'text-muted' }}">
+                                        <strong>${{ number_format($serv->c_moneda == 'USD' ? $serv->Pagos : 0, 2) }}</strong>
+                                </td>
+                                    <td
+                                        class="{{ $serv->c_moneda == 'MXN' && $serv->Pagos > 0 ? 'text-info' : 'text-muted' }}">
+                                        <strong>${{ number_format($serv->c_moneda == 'MXN' ? $serv->Pagos : 0, 2) }}</strong>
+                                    </td>
+                                <td
+                                    class="{{ $serv->c_moneda == 'USD' && $serv->Saldo > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($serv->c_moneda == 'USD' ? $serv->Saldo : 0, 2) }}</strong>
+                                </td>
+                                <td
+                                    class="{{ $serv->c_moneda == 'MXN' && $serv->Saldo > 0 ? 'text-info' : 'text-muted' }}">
+                                    <strong>${{ number_format($serv->c_moneda == 'MXN' ? $serv->Saldo : 0, 2) }}</strong>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -720,7 +849,18 @@
                             <td class="text-center">
                                 <strong class="text-warning">${{ number_format($balanceMXN, 2) }}</strong>
                             </td>
-
+                                <td class="text-center">
+                                    <strong class="text-info">${{ number_format($abonoUSD, 2) }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <strong class="text-warning">${{ number_format($abonoMXN, 2) }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <strong class="text-info">${{ number_format($saldoUSD, 2) }}</strong>
+                                </td>
+                                <td class="text-center">
+                                    <strong class="text-warning">${{ number_format($saldoMXN, 2) }}</strong>
+                                </td>
                             </tr>
                     </tfoot>
                 </table>

@@ -30,6 +30,25 @@ window.addEventListener('livewire:update', function(event) {
         });
 
 
+            document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(function(element) {
+        element.addEventListener('click', function() {
+            const targetId = this.getAttribute('data-bs-target').replace('#ingresos-', '');
+            const icon = document.getElementById('icon-' + targetId);
+            
+            // Toggle del icono
+            setTimeout(function() {
+                if (icon.classList.contains('ti-chevron-right')) {
+                    icon.classList.remove('ti-chevron-right');
+                    icon.classList.add('ti-chevron-down');
+                } else {
+                    icon.classList.remove('ti-chevron-down');
+                    icon.classList.add('ti-chevron-right');
+                }
+            }, 150);
+        });
+    });
+
+
 
 
 

@@ -33,7 +33,9 @@
                                 $descuento += $producto->descuento;
                                 $importe += $producto->importe;
                             @endphp
-                            <tr>
+                             <tr class="{{ $producto->edo == false ? 'table-danger' : '' }}"
+                      style="{{ $producto->edo == false ? 'text-decoration: line-through; text-decoration-color: #dc3545; text-decoration-thickness: 2px;' : '' }}">
+
                                 <td>{{ $producto->idVP }}</td>
                                 <td>{{ $producto->cupon?->cupon?->numCupon ?? '' }}</td>
                                 <td>{{ $producto->producto->nombreProducto ?? 'N/A' }}</td>

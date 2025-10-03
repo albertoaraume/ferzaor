@@ -360,15 +360,13 @@ public function TotalEfectivo($moneda = 'USD')
     ->where('status', '>', 0) // Solo ventas activas
     ->flatMap(function ($venta) {
         return $venta->ingresos;
-    })
-   
-        ->filter(function ($ing) use ($moneda) {
-            return  ($ing->c_moneda ?? null) == $moneda
-                && ($ing->c_formaPago ?? null) == '01';
-        })
-        ->sum(function ($ing) {
+    })->filter(function ($ing) use ($moneda) {
+            return  ($ing->ingreso->c_moneda ?? null) == $moneda
+                && ($ing->ingreso->c_formaPago ?? null) == '01';
+    })->sum(function ($ing) {
+       
             return $ing->total ?? 0;
-        });
+    });
 }
 
 public function TotalTransferencias($moneda = 'USD')
@@ -380,12 +378,12 @@ public function TotalTransferencias($moneda = 'USD')
     })
     ->where('status', '>', 0)      
         ->filter(function ($ing) use ($moneda) {
-            return ($ing->c_moneda ?? null) == $moneda
-                && ($ing->c_formaPago ?? null) == '03'
-                && ($ing->cuenta->idCuenta ?? null) != '19';
+            return ($ing->ingreso->c_moneda ?? null) == $moneda
+                && ($ing->ingreso->c_formaPago ?? null) == '03'
+                && ($ing->ingreso->cuenta->idCuenta ?? null) != '19';
         })
         ->sum(function ($ing) {
-            return $ing->total ?? 0;
+            return $ing->ingreso->total ?? 0;
         });
 }
 
@@ -404,8 +402,8 @@ public function pagosTarjeta($moneda = 'USD'): Collection
     }) 
     ->where('status', '>', 0)
         ->filter(function ($ing) use ($moneda) {
-            return ($ing->c_moneda ?? null) == $moneda
-                && in_array(($ing->c_formaPago ?? null), ['04', '28']);
+            return ($ing->ingreso->c_moneda ?? null) == $moneda
+                && in_array(($ing->ingreso->c_formaPago ?? null), ['04', '28']);
         })
         ->values(); // Opcional: reindexa la colección
 }
@@ -420,11 +418,11 @@ public function TotalPayPal($moneda = 'USD')
     })
     ->where('status', '>', 0)
         ->filter(function ($ing) use ($moneda) {
-            return  ($ing->c_moneda ?? null) == $moneda
-                && ($ing->cuenta->tipo ?? null) == '3';
+            return  ($ing->ingreso->c_moneda ?? null) == $moneda
+                && ($ing->ingreso->cuenta->tipo ?? null) == '3';
         })
         ->sum(function ($ing) {
-            return $ing->total ?? 0;
+            return $ing->ingreso->total ?? 0;
         });
 }
 
@@ -456,11 +454,11 @@ public function TotalTPVBanco($moneda = 'USD')
 {
     return $this->pagosTarjeta($moneda)
         ->filter(function ($ing) {
-            return !in_array($ing->terminal?->tipo, [7, 8, 9]) 
-            && !in_array($ing->cuenta->idCuenta , [4, 19]);
+            return !in_array($ing->ingreso->terminal?->tipo, [7, 8, 9])
+                && !in_array($ing->ingreso->cuenta->idCuenta, [4, 19]);
         })
         ->sum(function ($ing) {
-            return $ing->total ?? 0;
+            return $ing->ingreso->total ?? 0;
         });
 }
 
@@ -474,11 +472,11 @@ public function TotalMercadoPago($moneda = 'USD')
     ->where('status', '>', 0)
 
         ->filter(function ($ing) use ($moneda) {
-            return  ($ing->c_moneda ?? null) == $moneda
-                && ($ing->cuenta->idCuenta ?? null) == '19';
+            return  ($ing->ingreso->c_moneda ?? null) == $moneda
+                && ($ing->ingreso->cuenta->idCuenta ?? null) == '19';
         })
         ->sum(function ($ing) {
-            return $ing->total ?? 0;
+            return $ing->ingreso->total ?? 0;
         });
 }
 

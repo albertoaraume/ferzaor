@@ -33,7 +33,8 @@
                                 $descuento += $servicio->descuento;
                                 $importe += $servicio->importe;
                             @endphp
-                            <tr>
+                             <tr class="{{ $servicio->edo == false ? 'table-danger' : '' }}"
+                      style="{{ $servicio->edo == false ? 'text-decoration: line-through; text-decoration-color: #dc3545; text-decoration-thickness: 2px;' : '' }}">
                                 <td>{{ $servicio->idVS }}</td>
                                 <td>{{ $servicio->cupon?->cupon?->numCupon ?? '' }}</td>
                                 <td>{{ $servicio->servicio->nombreServicio ?? 'N/A' }}</td>
